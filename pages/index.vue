@@ -31,7 +31,7 @@ export default defineComponent({
     })
     const handleClick = (e: Event) => {
       e.preventDefault()
-      router.push({ query: { item_id: 'hoge' } })
+      router.push({ query: { item_id: [1, 3] as any } })
     }
     return {
       item_id,
