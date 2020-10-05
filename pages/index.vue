@@ -12,17 +12,19 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, onMounted, watch } from '@vue/composition-api'
+import { computed, ComputedRef, defineComponent, onMounted, Ref, watch } from '@vue/composition-api'
 import Logo from '~/components/Logo.vue'
 import useRouter from '~/use/useRouter'
 import { get } from '@/use/orderRepo'
+import useIndex from '@/use/useIndex'
 export default defineComponent({
   components: {
     Logo
   },
   setup() {
-    const { route, router } = useRouter()
-    const item_id = computed(() => route.value.query.item_id)
+    // const { route, router } = useRouter()
+    // const item_id = computed(() => route.value.query.item_id)
+    const { item_id, route, router } = useIndex()
     onMounted(() => {
       get(item_id)
     })
@@ -31,7 +33,7 @@ export default defineComponent({
     })
     const handleClick = (e: Event) => {
       e.preventDefault()
-      router.push({ query: { item_id: [1, 3] as any } })
+      router.push({ query: { item_id:  [1, 3] as any} })
     }
     return {
       item_id,
