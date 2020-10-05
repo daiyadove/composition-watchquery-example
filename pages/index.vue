@@ -13,8 +13,9 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted, watch } from '@vue/composition-api'
-import Logo from '@/components/Logo.vue'
-import useRouter from '@/use/useRouter'
+import Logo from '~/components/Logo.vue'
+import useRouter from '~/use/useRouter'
+import { get } from '@/use/orderRepo'
 export default defineComponent({
   components: {
     Logo
@@ -22,7 +23,12 @@ export default defineComponent({
   setup() {
     const { route, router } = useRouter()
     const item_id = computed(() => route.value.query.item_id)
-
+    onMounted(() => {
+      get(item_id)
+    })
+    watch(route, () => {
+      get(item_id)
+    })
     const handleClick = (e: Event) => {
       e.preventDefault()
       router.push({ query: { item_id: 'hoge' } })
